@@ -12,6 +12,7 @@ import '../HexaColor.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
+import '../Models/AllusersModel.dart';
 import '../Models/DailyWorkModel.dart';
 import '../provider/LoginProvider.dart';
 import '../provider/Them.dart';
@@ -37,7 +38,7 @@ class _DailyWorkState extends State<DailyWork> {
     super.initState();
   }
   var enableadddaily='';
-
+var userselected='';
   @override
   void dispose() {
     super.dispose();
@@ -51,6 +52,8 @@ class _DailyWorkState extends State<DailyWork> {
     DailyWork(),
   ];
   TextEditingController dateinputC = TextEditingController();
+  TextEditingController searchusercontroller = TextEditingController();
+
   var state = false;
   final key = GlobalKey();
 
@@ -179,10 +182,14 @@ class _DailyWorkState extends State<DailyWork> {
                                     ThemP.getcolor()),size: 27*unitHeightValue,),
                                 suffixIcon: GestureDetector(
                                     onTap: (){
+                                      FocusManager.instance.primaryFocus?.unfocus();
+                                      dateinputC.text = '';
+                                      userselected='';
+
                                       setState(() {
-                                        dateinputC.text='';
 
                                       });
+
                                     },
                                     child: Icon(color: Colors.redAccent,dateinputC.text.isEmpty||dateinputC.text.toString()==LanguageProvider.Llanguage('Search')
                                         ? null
@@ -215,6 +222,263 @@ class _DailyWorkState extends State<DailyWork> {
                               ),
                               //a  readOnly: true,  //set it true, so that user will not able to edit text
                               onTap: () async {
+
+
+                                if(Loginprovider.getshowAllDaily().toString()=='true'){
+
+
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return Center(
+                                        child: Card(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(9.0),
+                                            child: Container(
+                                              height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                                  1.4,
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                                  1.3,
+                                              child: Column(
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                    const EdgeInsets.all(
+                                                        8.0),
+                                                    child: SizedBox(
+                                                      child: Text(
+                                                          LanguageProvider.Llanguage('users'),
+                                                          style: ArabicTextStyle(
+                                                              arabicFont:
+                                                              ArabicFont
+                                                                  .tajawal,
+                                                              color: HexColor(
+                                                                  Globalvireables
+                                                                      .black2),
+                                                              fontSize: 18 *
+                                                                  unitHeightValue,
+                                                              fontWeight:
+                                                              FontWeight
+                                                                  .w700)),
+                                                    ),
+                                                  ),
+                                                  Divider(
+                                                      thickness: 1.0,
+                                                      color: Colors.grey),
+                                                  SizedBox(
+                                                    child: TextField(
+                                                      onChanged: (content) {
+                                                        setState(() {});
+                                                      },
+                                                      controller:
+                                                      searchusercontroller,
+                                                      //editing controller of this TextField
+                                                      decoration:
+                                                      InputDecoration(
+                                                        prefixIcon: Icon(
+                                                          Icons.search,
+                                                          color: HexColor(
+                                                              ThemP.getcolor()),
+                                                          size: 27 *
+                                                              unitHeightValue,
+                                                        ),
+                                                        suffixIcon:
+                                                        GestureDetector(
+                                                            onTap: () {
+                                                              setState(() {
+                                                                searchusercontroller
+                                                                    .text = '';
+                                                              });
+                                                            },
+                                                            child: Icon(
+                                                                null
+                                                            )),
+                                                        border:
+                                                        OutlineInputBorder(),
+                                                        focusedBorder: OutlineInputBorder(
+                                                            borderSide: BorderSide(
+                                                                color: HexColor(
+                                                                    ThemP
+                                                                        .getcolor()),
+                                                                width: 2.0),
+                                                            borderRadius:
+                                                            BorderRadius
+                                                                .circular(
+                                                                10.0)),
+                                                        enabledBorder: OutlineInputBorder(
+                                                            borderSide: BorderSide(
+                                                                color: HexColor(
+                                                                    ThemP
+                                                                        .getcolor()),
+                                                                width: 2.0),
+                                                            borderRadius:
+                                                            BorderRadius
+                                                                .circular(
+                                                                10.0)),
+                                                        contentPadding:
+                                                        EdgeInsets.only(
+                                                            top: 18,
+                                                            bottom: 18,
+                                                            right: 20,
+                                                            left: 20),
+                                                        fillColor: HexColor(
+                                                            Globalvireables
+                                                                .white),
+                                                        filled: true,
+                                                        hintText:
+                                                        LanguageProvider
+                                                            .Llanguage(
+                                                            "Search"),
+                                                      ),
+                                                      //a  readOnly: true,  //set it true, so that user will not able to edit text
+                                                      onTap: () async {
+                                                        setState(() {});
+
+
+                                                      },
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height:
+                                                    MediaQuery.of(context)
+                                                        .size
+                                                        .height /
+                                                        2.8,
+                                                    width:
+                                                    MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                        1,
+                                                    child: FutureBuilder(
+                                                      future:
+                                                      getallusers(context,''),
+                                                      builder: (BuildContext
+                                                      context,
+                                                          AsyncSnapshot<
+                                                              List<
+                                                                  AllusersModel>>
+                                                          snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          List<AllusersModel>?
+                                                          Visits =
+                                                              snapshot.data;
+
+                                                          List<AllusersModel>? search = Visits!
+                                                              .where((element) => element
+                                                              .namea
+                                                              .toString()
+                                                              .contains(
+                                                              searchusercontroller
+                                                                  .text
+                                                                  .toString()))
+                                                              .toList();
+
+                                                          return ListView(
+                                                            children: search!
+                                                                .map(
+                                                                    (AllusersModel
+                                                                v) =>
+                                                                    Column(
+                                                                      children: [
+                                                                        GestureDetector(
+                                                                          onTap: () {
+
+
+                                                                            dateinputC.text = v.namea.toString();
+                                                                            userselected=v.id.toString();
+                                                                            Navigator.pop(context);
+                                                                          },
+                                                                          child: Padding(
+                                                                            padding: const EdgeInsets.all(8.0),
+                                                                            child: SizedBox(
+                                                                                child: Row(
+                                                                                  children: [
+                                                                                    Container(
+                                                                                      child: Text(
+                                                                                        textAlign: TextAlign.right,
+                                                                                        v.namea.toString(),
+                                                                                        style: ArabicTextStyle(arabicFont: ArabicFont.tajawal, color: Colors.black, fontSize: 14 * unitHeightValue, fontWeight: FontWeight.w400),
+                                                                                      ),
+                                                                                    ),
+                                                                                    Spacer(),
+                                                                                    Container(
+                                                                                      child: Text(
+                                                                                        textAlign: TextAlign.center,
+                                                                                        v.id.toString(),
+                                                                                        style: ArabicTextStyle(arabicFont: ArabicFont.tajawal, color: Colors.black, fontSize: 14 * unitHeightValue, fontWeight: FontWeight.w400),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ],
+                                                                                )),
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ))
+                                                                .toList(),
+                                                          );
+                                                        } else {
+                                                          return Center(
+                                                              child:
+                                                              CircularProgressIndicator());
+                                                        }
+                                                      },
+                                                    ),
+                                                  ),
+                                                  Spacer(),
+                                                  Align(
+                                                    alignment:
+                                                    Alignment.bottomCenter,
+                                                    child: SizedBox(
+                                                      width:
+                                                      MediaQuery.of(context)
+                                                          .size
+                                                          .width /
+                                                          4,
+                                                      child: ElevatedButton(
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                          primary: HexColor(
+                                                              ThemP.getcolor()),
+                                                        ),
+                                                        child: Text(
+                                                          LanguageProvider
+                                                              .Llanguage(
+                                                              'cancel'),
+                                                          style: ArabicTextStyle(
+                                                              arabicFont:
+                                                              ArabicFont
+                                                                  .tajawal,
+                                                              color: HexColor(
+                                                                  Globalvireables
+                                                                      .white),
+                                                              fontSize: 14 *
+                                                                  unitHeightValue),
+                                                        ),
+                                                        onPressed: () async {
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+
+
+                                }
+
+
+
                                 setState(() {
 
                                 });
@@ -234,10 +498,58 @@ class _DailyWorkState extends State<DailyWork> {
                                   List<DailyWorkModel>? DailyWork =
                                       snapshot.data;
 
-                                  return DailyWork!.isNotEmpty
+
+
+                                  List<DailyWorkModel>? search = Loginprovider.getshowAllDaily().toString()!='true'?DailyWork!
+                                      .where((element) => element
+                                      .TicketId
+                                      .toString()
+                                      .contains(dateinputC
+                                      .text
+                                      .toString()) ||
+                                      element
+                                          .Descr
+                                          .toString()
+                                          .contains(dateinputC
+                                          .text
+                                          .toString()) ||
+                                      element
+                                          .ustnameA
+                                          .toString()
+                                          .contains(dateinputC
+                                          .text
+                                          .toString())
+                                      ||
+                                      element
+                                          .ustnameA
+                                          .toString()
+                                          .contains(dateinputC
+                                          .text
+                                          .toString())
+
+                                  )
+                                      .toList():
+                                  DailyWork!
+                                      .where((element) =>
+                                  element
+                                      .assignto
+                                      .toString()
+                                      .contains(userselected
+                                      .toString())
+                                      ||userselected==''
+
+                                  )
+                                      .toList();
+
+
+
+
+
+
+                                  return search!.isNotEmpty
                                       ? ListView(
                                     physics: const AlwaysScrollableScrollPhysics(), //
-                                    children: DailyWork!
+                                    children: search!
                                         .map((DailyWorkModel inv) =>
 
                                              Card(
@@ -251,7 +563,7 @@ class _DailyWorkState extends State<DailyWork> {
 
 
                                                           SizedBox(
-width: MediaQuery.of(context).size.width/4.5,
+width: MediaQuery.of(context).size.width/4,
                                                                 child: Row(
                                                                   children: [
 
@@ -262,7 +574,7 @@ width: MediaQuery.of(context).size.width/4.5,
                                                                                 .center,
                                                                             inv.TransDate.toString().substring(0,3),
                                                                             style: TextStyle(
-                                                                                fontSize: 17,
+                                                                                fontSize: 16*unitHeightValue,
                                                                                 fontWeight: FontWeight
                                                                                     .w800,
                                                                                 height: 1)),
@@ -271,7 +583,7 @@ width: MediaQuery.of(context).size.width/4.5,
                                                                                 .center,
                                                                             inv.TransDate.toString().substring(6,11),
                                                                             style: TextStyle(
-                                                                                fontSize: 16,
+                                                                                fontSize: 14*unitHeightValue,
                                                                                 height: 1)),
                                                                       ],
 
@@ -279,7 +591,7 @@ width: MediaQuery.of(context).size.width/4.5,
                                                                     Text(
                                                                       inv.TransDate.toString().substring(3,6),
                                                                       style: TextStyle(
-                                                                          fontSize: 35,
+                                                                          fontSize: 32*unitHeightValue,
                                                                           fontWeight: FontWeight
                                                                               .w800,
                                                                           color: HexColor(
@@ -319,7 +631,6 @@ width: MediaQuery.of(context).size.width/4.5,
                                                             Padding(
                                                               padding: const EdgeInsets.all(14),
                                                               child: Container(
-                                                                width: MediaQuery.of(context).size.width/1.25,
                                                                 child: Text(
                                                                     maxLines: 30,
                                                                     overflow: TextOverflow.ellipsis,
@@ -516,7 +827,15 @@ SizedBox(width: 10,),
     Uri postsURL = Uri.parse(Globalvireables.DailyWorkURL);
     try {
       var map = new Map<String, dynamic>();
+      var Loginprovider = Provider.of<LoginProvider>(context, listen: false);
+
+      
+
+print("alldailywork  "+Loginprovider.getshowAllDaily().toString());
+      if(Loginprovider.getshowAllDaily().toString()!='true')
       map['userid'] = useris;
+else
+        map['userid'] = 'all';
 
       http.Response res = await http.post(
         postsURL,
@@ -524,7 +843,8 @@ SizedBox(width: 10,),
       );
 
       if (res.statusCode == 200) {
-        print("Profile" + res.body.toString());
+        print("dailyworkOUTPT" + res.body.toString());
+        print("dailyworkINPUT" + map.toString());
 
         List<dynamic> body = jsonDecode(res.body);
 
@@ -642,5 +962,43 @@ SizedBox(width: 10,),
       newMonth = 'DEC';
     }
     return newMonth.toString();
+  }
+  Future<List<AllusersModel>> getallusers(
+      BuildContext context, String useris) async {
+    Uri postsURL = Uri.parse(Globalvireables.allusersURL);
+    try {
+
+      http.Response res = await http.post(
+        postsURL,
+        body: null,
+      );
+
+      if (res.statusCode == 200) {
+        print("Profile" + res.body.toString());
+
+        List<dynamic> body = jsonDecode(res.body);
+
+        List<AllusersModel> Doctors = body
+            .map(
+              (dynamic item) => AllusersModel.fromJson(item),
+        )
+            .toList();
+
+        return Doctors;
+      } else {
+        throw "Unable to retrieve Profile.";
+      }
+    } catch (e) {
+      await showDialog(
+        context: context,
+        builder: (context) => new AlertDialog(
+          title: new Text('بيانات المريض'),
+          content: Text(e.toString()),
+          actions: <Widget>[],
+        ),
+      );
+    }
+
+    throw "Unable to retrieve Profile.";
   }
 }

@@ -7,6 +7,8 @@ class DailyWorkModel {
   String? ustnameE;
   String? ustnameA;
 
+  String? assignto;
+
   DailyWorkModel(
       {
         this.TransDate,
@@ -14,7 +16,8 @@ class DailyWorkModel {
         this.WorkTime,
         this.Descr,
         this.ustnameE,
-        this.ustnameA
+        this.ustnameA,
+        this.assignto
       });
 
   DailyWorkModel.fromJson(Map<String, dynamic> json) {
@@ -25,6 +28,7 @@ class DailyWorkModel {
 
     ustnameE = json['ustnameE'];
     ustnameA = json['ustnameA'];
+    assignto = json['assignto'];
 
   }
 
@@ -37,6 +41,8 @@ class DailyWorkModel {
 
     data['ustnameE'] = this.ustnameE;
     data['ustnameA'] = this.ustnameA;
+    data['assignto'] = this.assignto;
+
     return data;
   }
 }

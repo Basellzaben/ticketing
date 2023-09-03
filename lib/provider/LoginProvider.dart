@@ -22,6 +22,28 @@ class LoginProvider extends ChangeNotifier {
   String? assignticketP;
   String? adddailyworkP;
 
+
+  String? showAllDaily;
+  String? showAllTicket;
+  getshowAllDaily() {
+    return showAllDaily;
+  }
+
+  setshowAllDaily(String showAllDaily) {
+    this.showAllDaily = showAllDaily;
+    notifyListeners();
+  }
+
+  getshowAllTicket() {
+    return showAllTicket;
+  }
+
+  setshowAllTicket(String showAllTicket) {
+    this.showAllTicket = showAllTicket;
+    notifyListeners();
+  }
+
+
   getadddailyworkP() {
     return adddailyworkP;
   }

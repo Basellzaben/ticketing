@@ -4,6 +4,7 @@ class TicketsModel {
   String? custNameA;
   String? custNameE;
   String? IssueDescr;
+  String? assignto;
 
   TicketsModel(
       {
@@ -11,7 +12,9 @@ class TicketsModel {
         this.TicketDate,
         this.custNameA,
         this.custNameE,
-        this.IssueDescr
+        this.IssueDescr,
+        this.assignto
+
       });
 
   TicketsModel.fromJson(Map<String, dynamic> json) {
@@ -20,6 +23,7 @@ class TicketsModel {
     custNameA = json['custNameA'];
     custNameE = json['custNameE'];
     IssueDescr = json['issueDescr'];
+    assignto = json['assignto'];
 
   }
 
@@ -30,6 +34,8 @@ class TicketsModel {
     data['custNameA'] = this.custNameA;
     data['custNameE'] = this.custNameE;
     data['issueDescr'] = this.IssueDescr;
+    data['assignto'] = this.assignto;
+
     return data;
   }
 }

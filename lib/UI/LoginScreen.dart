@@ -7,6 +7,7 @@ import 'package:ticketing/Models/LoginModel.dart';
 import '../GlobalVar.dart';
 import '../HexaColor.dart';
 import 'package:flutter/services.dart';
+import '../Models/TicketPermisionModel.dart';
 import '../provider/LoginProvider.dart';
 import '../provider/Them.dart';
 import '../provider/languageProvider.dart';
@@ -520,8 +521,58 @@ margin: EdgeInsets.only(top: 0),
   }
 
 
-   Login(String username, String password, BuildContext context) async {
+  Future<List<TicketPermisionModel>> getpermisionTicket(BuildContext context,String id) async {
+    Uri postsURL = Uri.parse(Globalvireables.permTicket);
+    var Loginprovider = Provider.of<LoginProvider>(context, listen: false);
+    var map = new Map<String, dynamic>();
+    map['userid'] =id.toString();
 
+    try {
+      http.Response res = await http.post(
+        postsURL,
+        body: map,
+      );
+
+      print("iiiiinputtecct" + res.body.toString());
+
+
+      if (res.statusCode == 200) {
+        print("Profileticket" + map.toString());
+
+        List<dynamic> body = jsonDecode(res.body);
+
+        List<TicketPermisionModel> Doctors = body
+            .map((dynamic item) => TicketPermisionModel.fromJson(item),).toList();
+
+        Loginprovider.setopenticketP(Doctors[0].openn.toString());
+        Loginprovider.setassignticketP(Doctors[0].assign.toString());
+
+
+        Loginprovider.setshowAllDaily(Doctors[0].showAllDaily.toString());
+        Loginprovider.setshowAllTicket(Doctors[0].showAllTicket.toString());
+
+
+        return Doctors;
+      } else {
+        throw "Unable to retrieve Profile.";
+      }
+    } catch (e) {
+      await showDialog(
+        context: context,
+        builder: (context) => new AlertDialog(
+          title: new Text('بيانات المريض'),
+          content: Text(e.toString()),
+          actions: <Widget>[],
+        ),
+      );
+    }
+
+    throw "Unable to retrieve Profile.";
+  }
+
+
+
+  Login(String username, String password, BuildContext context) async {
     prefs = await SharedPreferences.getInstance();
     var Loginprovider = Provider.of<LoginProvider>(context, listen: false);
     var l = Provider.of<Language>(context, listen: false);
@@ -577,6 +628,11 @@ margin: EdgeInsets.only(top: 0),
       Loginprovider.setnameE(Appoiments[0].nameE.toString());
 
 print(Appoiments[0].userName.toString()+ "  ggg");
+
+
+      getpermisionTicket(context,Appoiments[0].userId.toString());
+
+
 
         if (Appoiments[0].userName.toString().trim() == username) {
 

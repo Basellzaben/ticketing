@@ -44,6 +44,7 @@ class Language extends ChangeNotifier {
 
   //"Top Doctors :",
   static Map<String, Object?> ar = {
+    "users":"المستخدمين",
     "ticketnum":" : رقم التذكره",
     "hourdailywork":"ساعات العمل اليومي",
     "dailywork":"العمل اليومي",
@@ -242,6 +243,7 @@ class Language extends ChangeNotifier {
     "selecttiket":"Select Ticket",
     "save":"save",
     "todayTicket":"Today Ticket",
+    "users":"users",
 
     "selectuser":"Trans To ",
     "usersController":"Trans To ",

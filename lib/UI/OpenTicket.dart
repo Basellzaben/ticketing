@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:ticketing/UI/OpenTickets.dart';
 import '../GlobalVar.dart';
 import '../HexaColor.dart';
 import 'package:flutter/services.dart';
@@ -36,6 +37,7 @@ class _OpenTicketState extends State<OpenTicket> {
     gatMaxId(context);
    // callMehtod(context);
     super.initState();
+
   }
 
   @override
@@ -79,15 +81,15 @@ class _OpenTicketState extends State<OpenTicket> {
   TextEditingController requestbycontroller = TextEditingController();
 
 
-  var systemVar;
-  var dateVar;
-  var depVar;
-  var userVar;
-  var source;
-var typeVar;
-  var selectidcustomer;
-var classVar;
-var prpartyVar;
+  var systemVar='null';
+  var dateVar='null';
+  var depVar='null';
+  var userVar='null';
+  var source='null';
+var typeVar='null';
+  var selectidcustomer='null';
+var classVar='null';
+var prpartyVar='null';
 
 var maxid='';
   var timer;
@@ -424,8 +426,7 @@ var maxid='';
                                                                           List<
                                                                               AllCustomersModel>>
                                                                       snapshot) {
-                                                                if (snapshot
-                                                                    .hasData) {
+                                                                if (snapshot.hasData) {
                                                                   List<AllCustomersModel>?
                                                                       Visits =
                                                                       snapshot
@@ -449,8 +450,11 @@ var maxid='';
                                                                                     selectCustomerController.text = v.namea.toString();
 
                                                                                     selectidcustomer = v.id.toString();
-
                                                                                     Navigator.pop(context);
+
+                                                                                    setState(() {
+
+});
                                                                                   },
                                                                                   child: Padding(
                                                                                     padding: const EdgeInsets.all(8.0),
@@ -549,7 +553,7 @@ var maxid='';
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.all(12.0),
-                                  child: SizedBox(
+                                  child: selectidcustomer.toString()!='null'?SizedBox(
                                     child: SizedBox(
                                       child: TextField(
                                         textAlign: TextAlign.center,
@@ -621,7 +625,8 @@ var maxid='';
                                                               child: Text(
                                                                   LanguageProvider
                                                                       .Llanguage(
-                                                                          'systems'),
+                                                                          'system'),
+
                                                                   style: ArabicTextStyle(
                                                                       arabicFont:
                                                                           ArabicFont
@@ -774,7 +779,6 @@ systemVar=v.id.toString();
                                                                                           child: Row(
                                                                                         children: [
                                                                                           Container(
-                                                                                            width: MediaQuery.of(context).size.width / 2.2,
                                                                                             child: Text(
                                                                                               textAlign: TextAlign.right,
                                                                                               v.namea.toString(),
@@ -783,7 +787,6 @@ systemVar=v.id.toString();
                                                                                           ),
                                                                                           Spacer(),
                                                                                           Container(
-                                                                                            width: 100,
                                                                                             child: Text(
                                                                                               textAlign: TextAlign.center,
                                                                                               v.id.toString(),
@@ -859,7 +862,7 @@ systemVar=v.id.toString();
                                         },
                                       ),
                                     ),
-                                  ),
+                                  ):null,
                                 ),
                               ],
                             ),
@@ -1090,12 +1093,12 @@ systemVar=v.id.toString();
                                                                                     Navigator.pop(context);
                                                                                   },
                                                                                   child: Padding(
-                                                                                    padding: const EdgeInsets.all(8.0),
+                                                                                    padding: const EdgeInsets.all(14.0),
                                                                                     child: SizedBox(
                                                                                         child: Row(
                                                                                       children: [
                                                                                         Container(
-                                                                                          width: MediaQuery.of(context).size.width / 2.2,
+
                                                                                           child: Text(
                                                                                             textAlign: TextAlign.right,
                                                                                             v.namea.toString(),
@@ -1104,7 +1107,7 @@ systemVar=v.id.toString();
                                                                                         ),
                                                                                         Spacer(),
                                                                                         Container(
-                                                                                          width: 100,
+
                                                                                           child: Text(
                                                                                             textAlign: TextAlign.center,
                                                                                             v.id.toString(),
@@ -1408,7 +1411,7 @@ classVar=v.id.toString();
                                                                                         child: Row(
                                                                                       children: [
                                                                                         Container(
-                                                                                          width: MediaQuery.of(context).size.width / 2.2,
+
                                                                                           child: Text(
                                                                                             textAlign: TextAlign.right,
                                                                                             v.namea.toString(),
@@ -1417,7 +1420,7 @@ classVar=v.id.toString();
                                                                                         ),
                                                                                         Spacer(),
                                                                                         Container(
-                                                                                          width: 100,
+
                                                                                           child: Text(
                                                                                             textAlign: TextAlign.center,
                                                                                             v.id.toString(),
@@ -1721,7 +1724,6 @@ classVar=v.id.toString();
                                                                                         child: Row(
                                                                                       children: [
                                                                                         Container(
-                                                                                          width: MediaQuery.of(context).size.width / 2.2,
                                                                                           child: Text(
                                                                                             textAlign: TextAlign.right,
                                                                                             v.namea.toString(),
@@ -1730,7 +1732,6 @@ classVar=v.id.toString();
                                                                                         ),
                                                                                         Spacer(),
                                                                                         Container(
-                                                                                          width: 100,
                                                                                           child: Text(
                                                                                             textAlign: TextAlign.center,
                                                                                             v.id.toString(),
@@ -2034,7 +2035,6 @@ depVar=v.id.toString();
                                                                                         child: Row(
                                                                                       children: [
                                                                                         Container(
-                                                                                          width: MediaQuery.of(context).size.width / 2.2,
                                                                                           child: Text(
                                                                                             textAlign: TextAlign.right,
                                                                                             v.namea.toString(),
@@ -2043,7 +2043,6 @@ depVar=v.id.toString();
                                                                                         ),
                                                                                         Spacer(),
                                                                                         Container(
-                                                                                          width: 100,
                                                                                           child: Text(
                                                                                             textAlign: TextAlign.center,
                                                                                             v.id.toString(),
@@ -2348,7 +2347,6 @@ depVar=v.id.toString();
                                                                                         child: Row(
                                                                                       children: [
                                                                                         Container(
-                                                                                          width: MediaQuery.of(context).size.width / 2.2,
                                                                                           child: Text(
                                                                                             textAlign: TextAlign.right,
                                                                                             v.namea.toString(),
@@ -2357,7 +2355,6 @@ depVar=v.id.toString();
                                                                                         ),
                                                                                         Spacer(),
                                                                                         Container(
-                                                                                          width: 100,
                                                                                           child: Text(
                                                                                             textAlign: TextAlign.center,
                                                                                             v.id.toString(),
@@ -2890,7 +2887,6 @@ userVar=v.id.toString();
                                                                                     child: Row(
                                                                                   children: [
                                                                                     Container(
-                                                                                      width: MediaQuery.of(context).size.width / 2.2,
                                                                                       child: Text(
                                                                                         textAlign: TextAlign.right,
                                                                                         v.namea.toString(),
@@ -2899,7 +2895,6 @@ userVar=v.id.toString();
                                                                                     ),
                                                                                     Spacer(),
                                                                                     Container(
-                                                                                      width: 100,
                                                                                       child: Text(
                                                                                         textAlign: TextAlign.center,
                                                                                         v.id.toString(),
@@ -3133,9 +3128,9 @@ userVar=v.id.toString();
 
 
 
-                                          if(date.text.toString()!=null && selectidcustomer.text.toString()!=null&&source.text.toString()!=null &&
-    typeVar.text.toString()!=null && depVar.text.toString()!=null&&expexteddate.text.toString()!=null &&
-    userVar.text.toString()!=null&&systemVar.text.toString()!=null&&explanerror.text.toString()!=null) {
+                                          if(date.text.toString()!=null && selectidcustomer.toString()!='null'&&source.toString()!='null' &&
+    typeVar.toString()!='null' && depVar.toString()!='null'&&expexteddate.text.toString()!=null &&
+    userVar.toString()!='null'&&systemVar.toString()!='null'&&explanerror.text.toString()!=null) {
   OpenTicket(context);
 }else{
   showDialog(
@@ -3517,8 +3512,8 @@ setState(() {
         builder: (_) => AlertDialog(
           title: Text(l.Llanguage('ClosTicket')),
           content: Text(l.getLanguage() == "AR"
-              ? 'جار اغلاق التذكره ...'
-              : 'close ticket..'),
+              ? 'جار فتح التذكره ...'
+              : 'open ticket..'),
         ));
 
     var map = new Map<String, dynamic>();
@@ -3567,7 +3562,19 @@ setState(() {
       print("OUTPUT  : "+ jsonResponse.toString());
 
       if (jsonResponse.toString().contains('1S')) {
+
+
         Navigator.pop(context);
+        Navigator.pop(context);
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => OpenTickets()),
+        );
+
+        setState(() {
+
+        });
         showDialog(
             context: context,
             builder: (_) => AlertDialog(

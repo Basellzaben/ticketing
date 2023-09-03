@@ -44,8 +44,11 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
 
+
     getpermisionTicket(context);
     getpermisionDailyWork(context);
+
+
 
     super.initState();
   }
@@ -60,7 +63,8 @@ class _HomeState extends State<Home> {
     double unitHeightValue = MediaQuery.of(context).size.height * 0.00122;
     var ThemP = Provider.of<Them>(context, listen: false);
     var LanguageProvider = Provider.of<Language>(context, listen: false);
-
+    print(    Provider.of<LoginProvider>(context, listen: false).getshowAllTicket().toString() +"  showAllTicketprovider"
+    );
     var Loginprovider = Provider.of<LoginProvider>(context, listen: false);
 
     return Stack(children: <Widget>[
@@ -517,8 +521,8 @@ child: Container(
       borderRadius: BorderRadius.horizontal(
           left: Radius.elliptical(
               MediaQuery.of(context).size.width, 100.0))),
-    width: 80,
-    height: 80,
+    width:  MediaQuery.of(context).size.width/5,
+    height:  MediaQuery.of(context).size.width/5,
     child: Card(
       color: HexColor(ThemP.getcolor()),
       shape: RoundedRectangleBorder(
@@ -537,13 +541,13 @@ child: Container(
         children: [
           Spacer(),
           Spacer(),
-          Text('23',
+          Text(Doctor.TicketDate.toString().substring(4,6),
               style: ArabicTextStyle(
                   arabicFont: ArabicFont.tajawal,
                   color: HexColor(Globalvireables.white),
                   fontSize: 25 * unitHeightValue,
                   fontWeight: FontWeight.w900)),
-          Text('OCT',
+          Text(Doctor.TicketDate.toString().substring(0,3),
               style: ArabicTextStyle(
                   arabicFont: ArabicFont.tajawal,
                   color: HexColor(Globalvireables.white),
@@ -809,6 +813,9 @@ child: Container(
 
          Loginprovider.setopenticketP(Doctors[0].openn.toString());
          Loginprovider.setassignticketP(Doctors[0].assign.toString());
+
+         Loginprovider.setshowAllTicket(Doctors[0].showAllTicket.toString());
+         Loginprovider.setshowAllDaily(Doctors[0].showAllDaily.toString());
 
 
          return Doctors;
