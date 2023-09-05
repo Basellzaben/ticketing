@@ -6,6 +6,8 @@ class TicketsModel {
   String? IssueDescr;
   String? assignto;
 
+  String? empname;
+
   TicketsModel(
       {
         this.Id,
@@ -13,8 +15,8 @@ class TicketsModel {
         this.custNameA,
         this.custNameE,
         this.IssueDescr,
-        this.assignto
-
+        this.assignto,
+        this.empname
       });
 
   TicketsModel.fromJson(Map<String, dynamic> json) {
@@ -24,7 +26,7 @@ class TicketsModel {
     custNameE = json['custNameE'];
     IssueDescr = json['issueDescr'];
     assignto = json['assignto'];
-
+    empname = json['empname'];
   }
 
   Map<String, dynamic> toJson() {
@@ -35,6 +37,7 @@ class TicketsModel {
     data['custNameE'] = this.custNameE;
     data['issueDescr'] = this.IssueDescr;
     data['assignto'] = this.assignto;
+    data['empname'] = this.empname;
 
     return data;
   }

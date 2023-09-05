@@ -47,6 +47,12 @@ dependencies:
   popup_menu_plus: ^0.0.4
   flutter_boom_menu_new: ^1.0.1
   scroll_date_picker: ^3.7.3
+  flutter_local_notifications: ^15.1.1
+
+  flutter_background_service: ^5.0.1
+  flutter_switch: ^0.3.2
+  app_settings: ^5.0.0
+
 
 dev_dependencies:
   flutter_test:

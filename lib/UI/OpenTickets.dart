@@ -409,8 +409,6 @@ setState(() {
                                                                       children: [
                                                                         GestureDetector(
                                                                           onTap: () {
-
-
                                                                             dateinputC.text = v.namea.toString();
                                                                             userselected=v.id.toString();
                                                                             Navigator.pop(context);
@@ -572,13 +570,9 @@ setState(() {
                                       children: search!
                                           .map((TicketsModel inv) => Card(
                                                     color: Colors.white,
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      side: BorderSide(
-                                                        width: 0.5,
+                                                    shape: RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius.circular(10),
+                                                      side: BorderSide(width: 0.5,
                                                         //  color: Colors.black12.withOpacity(0.1),
                                                       ),
                                                     ),
@@ -1570,6 +1564,8 @@ SizedBox(height: 20,),
                                                                           fontSize: 12 * unitHeightValue,
                                                                           fontWeight: FontWeight.w500)),
                                                                 ),
+
+
                                                                 Spacer()
                                                               ],
                                                             ),
@@ -1610,40 +1606,59 @@ SizedBox(height: 20,),
                                                             ),
                                                             Row(
                                                               children: [
-                                                                Container(
-                                                                  width: MediaQuery.of(
-                                                                              context)
-                                                                          .size
-                                                                          .width /
-                                                                      1.4,
-                                                                  child: Text(
-                                                                      maxLines:
-                                                                          10,
-                                                                      overflow:
-                                                                          TextOverflow
-                                                                              .ellipsis,
-                                                                      inv.TicketDate
-                                                                              .toString()
-                                                                          .substring(
-                                                                              0,
-                                                                              12),
-                                                                      style: ArabicTextStyle(
-                                                                          arabicFont: ArabicFont
-                                                                              .tajawal,
-                                                                          color: HexColor(Globalvireables
-                                                                              .black2),
-                                                                          fontSize: 12 *
-                                                                              unitHeightValue,
-                                                                          fontWeight:
-                                                                              FontWeight.w500)),
+                                                                Column(
+                                                                  children: [
+                                                                    Container(
+                                                                      width: MediaQuery.of(
+                                                                                  context)
+                                                                              .size
+                                                                              .width /
+                                                                          1.4,
+                                                                      child: Text(
+                                                                          maxLines:
+                                                                              10,
+                                                                          overflow:
+                                                                              TextOverflow
+                                                                                  .ellipsis,
+                                                                          inv.TicketDate
+                                                                                  .toString()
+                                                                              .substring(
+                                                                                  0,
+                                                                                  12),
+                                                                          style: ArabicTextStyle(
+                                                                              arabicFont: ArabicFont
+                                                                                  .tajawal,
+                                                                              color: HexColor(Globalvireables
+                                                                                  .black2),
+                                                                              fontSize: 12 *
+                                                                                  unitHeightValue,
+                                                                              fontWeight:
+                                                                                  FontWeight.w500)),
+                                                                    ),
+
+                                                                    if(Loginprovider.getshowAllTicket().toString()=='true')
+                                                                    Container(
+                                                                      width: MediaQuery.of(context).size.width / 1.4,
+                                                                      child: Text(
+                                                                          maxLines: 13,
+                                                                          overflow: TextOverflow.ellipsis,
+                                                                          inv.empname.toString(),
+                                                                          style: ArabicTextStyle(
+                                                                              arabicFont: ArabicFont.tajawal,
+                                                                              color: HexColor(Globalvireables.black2),
+                                                                              fontSize: 12 * unitHeightValue,
+                                                                              fontWeight: FontWeight.w500)
+                                                                           ),
+                                                                    ),
+
+
+
+
+
+
+                                                                  ],
                                                                 ),
-                                                                Spacer()
-
-
-
-
-
-
+                                                              Spacer()
                                                               ],
                                                             ),
 
@@ -1984,8 +1999,7 @@ else
         ]);
   }
 */
-  Future<String?> _showTextInputDialog(
-      BuildContext context, String ticketid) async {
+  Future<String?> _showTextInputDialog(BuildContext context, String ticketid) async {
     var LanguageProvider = Provider.of<Language>(context, listen: false);
 
     return showDialog(
@@ -2126,9 +2140,14 @@ else
             builder: (_) => AlertDialog(
               title: Text(l.Llanguage('transTicket')),
               content: Text(l.getLanguage() == "AR"
-                  ? 'تم التذكره التذكره بنجاح'
+                  ? 'تم تحويل التذكره بنجاح'
                   : 'trans ticketing is done..'),
             ));
+
+        setState(() {
+
+        });
+
       } else {
         Navigator.pop(context);
         showDialog(
@@ -2229,3 +2248,37 @@ else
   }
 */
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

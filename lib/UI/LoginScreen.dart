@@ -627,7 +627,13 @@ margin: EdgeInsets.only(top: 0),
       Loginprovider.setnameA(Appoiments[0].nameA.toString());
       Loginprovider.setnameE(Appoiments[0].nameE.toString());
 
-print(Appoiments[0].userName.toString()+ "  ggg");
+       prefs = await SharedPreferences.getInstance();
+      await prefs.setString('userid', Appoiments[0].userId.toString());
+
+
+
+
+      print(Appoiments[0].userName.toString()+ "  ggg");
 
 
       getpermisionTicket(context,Appoiments[0].userId.toString());

@@ -25,6 +25,19 @@ class LoginProvider extends ChangeNotifier {
 
   String? showAllDaily;
   String? showAllTicket;
+
+  bool? AllowN;
+
+  getAllowN() {
+    return AllowN;
+  }
+
+  setAllowN(bool AllowN) {
+    this.AllowN = AllowN;
+    notifyListeners();
+  }
+
+
   getshowAllDaily() {
     return showAllDaily;
   }

@@ -44,7 +44,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
 
-
+    setAllowNotification();
     getpermisionTicket(context);
     getpermisionDailyWork(context);
 
@@ -891,7 +891,13 @@ child: Container(
 /////////////
 
 
+  setAllowNotification() async {
+    var loginP = Provider.of<LoginProvider>(context, listen: false);
 
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    loginP.setAllowN((await prefs.getBool('allowN'))??false);
+
+  }
 
 }
    class SalesData {
