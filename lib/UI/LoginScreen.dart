@@ -595,7 +595,7 @@ margin: EdgeInsets.only(top: 0),
 
   //  try {
 
-      Uri apiUrl = Uri.parse('http://10.0.1.120:9998/api/loginController/login');
+      Uri apiUrl = Uri.parse(Globalvireables.loginAPI);
 
       http.Response response = await http
           .post(apiUrl, body:map,)
@@ -613,19 +613,18 @@ margin: EdgeInsets.only(top: 0),
       )
           .toList();
 
-
-
-      Loginprovider.settel(Appoiments[0].tel.toString());
-      Loginprovider.setemail(Appoiments[0].email.toString());
-      Loginprovider.setmangerNameA(Appoiments[0].mangerNameA.toString());
-      Loginprovider.setmangerNameE(Appoiments[0].mangerNameE.toString());
-      Loginprovider.setdepnameA(Appoiments[0].depnameA.toString());
-      Loginprovider.setdepnameE(Appoiments[0].depnameE.toString());
-      Loginprovider.setuserId(Appoiments[0].userId.toString());
-      Loginprovider.setpassword(password.toString());
-      Loginprovider.setuserName(Appoiments[0].userName.toString());
-      Loginprovider.setnameA(Appoiments[0].nameA.toString());
-      Loginprovider.setnameE(Appoiments[0].nameE.toString());
+try {
+  Loginprovider.settel(Appoiments[0].tel.toString());
+  Loginprovider.setemail(Appoiments[0].email.toString());
+  Loginprovider.setmangerNameA(Appoiments[0].mangerNameA.toString());
+  Loginprovider.setmangerNameE(Appoiments[0].mangerNameE.toString());
+  Loginprovider.setdepnameA(Appoiments[0].depnameA.toString());
+  Loginprovider.setdepnameE(Appoiments[0].depnameE.toString());
+  Loginprovider.setuserId(Appoiments[0].userId.toString());
+  Loginprovider.setpassword(password.toString());
+  Loginprovider.setuserName(Appoiments[0].userName.toString());
+  Loginprovider.setnameA(Appoiments[0].nameA.toString());
+  Loginprovider.setnameE(Appoiments[0].nameE.toString());
 
        prefs = await SharedPreferences.getInstance();
       await prefs.setString('userid', Appoiments[0].userId.toString());
@@ -639,7 +638,7 @@ margin: EdgeInsets.only(top: 0),
       getpermisionTicket(context,Appoiments[0].userId.toString());
 
 
-
+      }catch(_){}
         if (Appoiments[0].userName.toString().trim() == username) {
 
           prefs = await SharedPreferences.getInstance();

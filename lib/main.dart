@@ -19,13 +19,9 @@ import 'UI/LoginScreen.dart';
 import 'NotificationService.dart';
 import 'package:http/http.dart' as http;
 
-
-String language='';
-
+String language = '';
 
 Future<void> main() async {
-
-
   WidgetsFlutterBinding.ensureInitialized();
   //final prefs = await SharedPreferences.getInstance();
   runApp(MultiProvider(
@@ -34,35 +30,41 @@ Future<void> main() async {
         ChangeNotifierProvider<Them>(create: (_) => Them()),
         ChangeNotifierProvider<LoginProvider>(create: (_) => LoginProvider()),
       ],
-    child:DevicePreview(enabled: true,builder:(context)=> const MyApp(),)));
+      child: DevicePreview(
+        enabled: false,
+        builder: (context) => const MyApp(),
+      )));
   initializeService();
+  NotificationService().initNotification();
 }
-
-
 
 const notificationChannelId = 'background_test';
 const notificationId = 424;
-var ticketId='';
+var ticketId = '';
 
 Future<void> initializeService() async {
   final service = FlutterBackgroundService();
 
   const AndroidNotificationChannel channel = AndroidNotificationChannel(
-    notificationChannelId, 'MY FOREGROUND SERVICE',
-    description:
-    'hello world',
+    notificationChannelId,
+    'MY FOREGROUNDSERVICE',
+    description: 'hello world',
     importance: Importance.high,
   );
 
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
-  await flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()?.createNotificationChannel(channel);
+  await flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
+      ?.createNotificationChannel(channel);
 
   await service.configure(
     androidConfiguration: AndroidConfiguration(
       onStart: onStart,
       autoStart: true,
-      isForegroundMode: true,
+      isForegroundMode: false,
     ),
     iosConfiguration: IosConfiguration(
       autoStart: true,
@@ -74,7 +76,7 @@ Future<void> initializeService() async {
 @pragma('vm:entry-point')
 onStart(ServiceInstance service) async {
   DartPluginRegistrant.ensureInitialized();
- /* if (service is AndroidServiceInstance) {
+  /* if (service is AndroidServiceInstance) {
     service.on('setAsForeground').listen((event) {
       service.setAsForegroundService();
     });
@@ -86,42 +88,38 @@ onStart(ServiceInstance service) async {
     service.stopSelf();
   });*/
 
-
-  var initcount=0;
+  var initcount = 0;
   Timer.periodic(const Duration(seconds: 2), (timer) async {
-
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("EXUCUTE");
+
+    // try{
+    if (prefs.getString('userid') != 'null') {
+      var count =
+          int.parse(await getOpenTickets(prefs.getString('userid').toString()));
+
+      var tiketid = await prefs.getString('ticketId');
+      var tiketdesc = await prefs.getString('ticketDesc');
+
+      try {
 
 
-   // try{
-    if(prefs.getString('userid')!='null') {
-      var count = int.parse(await getOpenTickets(
-          prefs.getString('userid').toString()));
-
-      var tiketid= await prefs.getString('ticketId');
-      var tiketdesc= await prefs.getString('ticketDesc');
 
 
-      if(initcount<count){
-        NotificationService().showNotification(title: ' التذكره رقم $tiketid  تم تحويلها لك ',
-            body: tiketdesc);
+
+        if (initcount < count) {
+          NotificationService().showNotification(
+              id: count,
+              title: ' التذكره رقم $tiketid  تم تحويلها لك ',
+              body: tiketdesc);
+        }
+        initcount = int.parse(
+            await getOpenTickets(prefs.getString('userid').toString()));
+      } catch (E) {
+        print("ERROR WHEN GET DATA    $E");
       }
-       initcount = int.parse(await getOpenTickets(
-           prefs.getString('userid').toString()));
-
-
     }
 
-
-
-
-    //}
-       /* catch(E){
-
-      print("ERROR WHEN GET DATA    $E");
-
-        }
-*/
     /* if (service is AndroidServiceInstance) {
       service.setForegroundNotificationInfo(
         title: "App in background...",
@@ -135,21 +133,16 @@ onStart(ServiceInstance service) async {
       },
     );*/
   });
-
-  print("EXUCUTE");
-
-
 }
+
 final globalNavigatorKey = GlobalKey<NavigatorState>();
-getOpenTickets(
-     String useris) async {
+
+getOpenTickets(String useris) async {
   Uri postsURL = Uri.parse(Globalvireables.ticketURL);
   try {
     var map = new Map<String, dynamic>();
 
-
-
-      map['userid'] = useris;
+    map['userid'] = useris;
 
     http.Response res = await http.post(
       postsURL,
@@ -164,45 +157,38 @@ getOpenTickets(
       List<TicketsModel> Doctors = body
           .map(
             (dynamic item) => TicketsModel.fromJson(item),
-      )
+          )
           .toList();
-
-
 
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString('ticketId', Doctors.last.Id.toString());
       await prefs.setString('ticketDesc', Doctors.last.IssueDescr.toString());
+      await prefs.setString('ticketDate', Doctors.last.TicketDate.toString().substring(5,10));
 
-
-
-      print("this is length   "+Doctors.length.toString());
+    //  print("this is datee   " + Doctors.last.TicketDate.toString().substring(5,7));
 
       return Doctors.length.toString();
     } else {
       throw "Unable to retrieve Profile.";
     }
-  } catch (e) {
-
-  }
+  } catch (e) {}
 
   throw "Unable to retrieve Profile.";
 }
 
-
-
 var x;
+
 //
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    x=context;
+    x = context;
     return MaterialApp(
       key: globalNavigatorKey,
       title: 'Flutter',
       debugShowCheckedModeBanner: false,
-
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
         useMaterial3: true,
@@ -220,28 +206,27 @@ class MyHomePage extends StatefulWidget {
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
+
 var isMackOs;
+
 class _MyHomePageState extends State<MyHomePage> {
   SetLanguage(BuildContext context) async {
     var language;
-    SharedPreferences pref =
-    await SharedPreferences.getInstance();
-    language=pref.get('language') ?? 'AR';
-    if(language==null ||language.isEmpty){
-      language='AR';
-    }else{
-      language='AR';
-
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    language = pref.get('language') ?? 'AR';
+    if (language == null || language.isEmpty) {
+      language = 'AR';
+    } else {
+      language = 'AR';
     }
     pref.setString('language', language);
-    Provider.of<Language>(context, listen: false)
-        .setLanguage(language);
-    print(language +" laaan");}
+    Provider.of<Language>(context, listen: false).setLanguage(language);
+    print(language + " laaan");
+  }
+
   @override
   Widget build(BuildContext context) {
-
     isMackOs = Theme.of(context).platform == TargetPlatform.macOS;
-
 
     SetLanguage(context);
     return EasySplashScreen(
@@ -251,31 +236,31 @@ class _MyHomePageState extends State<MyHomePage> {
         width: MediaQuery.of(context).size.width,
         fit: BoxFit.cover,
       ).image,
-      logoWidth: isMackOs?MediaQuery.of(context).size.width/10:MediaQuery.of(context).size.width/2.5,
-      loaderColor:HexColor(Globalvireables.basecolor),
+      logoWidth: isMackOs
+          ? MediaQuery.of(context).size.width / 10
+          : MediaQuery.of(context).size.width / 2.5,
+      loaderColor: HexColor(Globalvireables.basecolor),
       logo: Image.asset(
         "assets/logo.png",
       ),
       showLoader: true,
-      title:  Text(
+      title: Text(
         textAlign: TextAlign.center,
-        'شريكك الاستراتيجي للنجاح\n'+'Your Strategic partner to success'
-        ,
+        'شريكك الاستراتيجي للنجاح\n' + 'Your Strategic partner to success',
         style: ArabicTextStyle(
           fontWeight: FontWeight.w300,
           fontSize: 22,
           arabicFont: ArabicFont.tajawal,
         ),
-
       ),
-      loadingText:  Text(
+      loadingText: Text(
         '',
         style: ArabicTextStyle(
-            arabicFont: ArabicFont.tajawal,color: HexColor(Globalvireables.basecolor)),
+            arabicFont: ArabicFont.tajawal,
+            color: HexColor(Globalvireables.basecolor)),
       ),
-      navigator:  LoginScreen(),
+      navigator: LoginScreen(),
       durationInSeconds: 5,
     );
   }
-
 }

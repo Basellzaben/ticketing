@@ -14,7 +14,10 @@ class Globalvireables {
   static String grey="#707070";
   static String secondcolor2="#d0e8ee";
 
-  static String connectIP="10.0.1.120:9998";
+
+  // static String connectIP="10.0.1.120:9998";
+ static String connectIP="10.0.1.109:7075";
+
 
   static String loginAPI="http://"+Globalvireables.connectIP+"/api/loginController/login";
   static String NumofticketsURL="http://"+Globalvireables.connectIP+"/api/NumOfTicketsController/NumOfTickets";
@@ -37,8 +40,9 @@ class Globalvireables {
   static String infoTmax="http://"+Globalvireables.connectIP+"/api/infoTmax/maxticketid";
   static String infoTpriority="http://"+Globalvireables.connectIP+"/api/infoTpriority/priority";
   static String infoTsource="http://"+Globalvireables.connectIP+"/api/infoTsource/ticketsource";
-
   static String OpenTicketURL="http://"+Globalvireables.connectIP+"/api/OpenTicketController/OpenTicket";
+
+
 
 
   static String permTicket="http://"+Globalvireables.connectIP+"/api/ticketPermisionController/ticketPermision";

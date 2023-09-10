@@ -105,6 +105,7 @@ var maxid='';
   Widget build(BuildContext context) {
     var ThemP = Provider.of<Them>(context, listen: false);
 
+    var Loginprovider = Provider.of<LoginProvider>(context, listen: false);
 
 
 
@@ -739,6 +740,9 @@ var maxid='';
                                                                 FutureBuilder(
                                                               future: getsystems(
                                                                   context,
+
+                                                                  Loginprovider.getshowAllTicket().toString()=='true'?
+                                                              "all":
                                                                   selectidcustomer),
                                                               builder: (BuildContext
                                                                       context,
@@ -3210,7 +3214,9 @@ userVar=v.id.toString();
     Uri postsURL = Uri.parse(Globalvireables.getsystems);
     try {
       var map = new Map<String, dynamic>();
-      map['customerid'] = customerid;
+
+
+        map['customerid'] = customerid;
 
       http.Response res = await http.post(
         postsURL,
@@ -3219,6 +3225,9 @@ userVar=v.id.toString();
 
       if (res.statusCode == 200) {
         List<dynamic> body = jsonDecode(res.body);
+
+
+        print("systemss : "+body.toString());
 
         List<systemsModel> Doctors = body
             .map(

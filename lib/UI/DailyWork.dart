@@ -631,15 +631,14 @@ width: MediaQuery.of(context).size.width/4,
                                                             Padding(
                                                               padding: const EdgeInsets.all(14),
                                                               child: Container(
+                                                                width: MediaQuery.of(context).size.width/1.4,
                                                                 child: Text(
                                                                     maxLines: 30,
                                                                     overflow: TextOverflow.ellipsis,
                                                                     inv.Descr
                                                                         .toString(),
                                                                     style: ArabicTextStyle(
-                                                                        arabicFont:
-                                                                        ArabicFont
-                                                                            .tajawal,
+                                                                        arabicFont: ArabicFont.tajawal,
                                                                         color: HexColor(
                                                                             Globalvireables
                                                                                 .black2),
@@ -647,7 +646,8 @@ width: MediaQuery.of(context).size.width/4,
                                                                             unitHeightValue,
                                                                         fontWeight:
                                                                         FontWeight
-                                                                            .w700)),
+                                                                            .w700)
+                                                                ),
                                                               ),
                                                             ),
                                                             Spacer()
