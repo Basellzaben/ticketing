@@ -16,17 +16,16 @@ class LoginProvider extends ChangeNotifier {
   String? depnameA;
   String? depnameE;
   String? userId;
-
-
   String? openticketP;
   String? assignticketP;
   String? adddailyworkP;
-
-
   String? showAllDaily;
   String? showAllTicket;
-
   bool? AllowN;
+
+
+
+
 
   getAllowN() {
     return AllowN;

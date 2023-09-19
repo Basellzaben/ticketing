@@ -87,25 +87,28 @@ onStart(ServiceInstance service) async {
   service.on('stopService').listen((event) {
     service.stopSelf();
   });*/
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-  var initcount = 0;
-  Timer.periodic(const Duration(seconds: 2), (timer) async {
+  int x=prefs.getString('username')?.length??0;
+  if(x>2)
+  {
+    Timer.periodic(const Duration(seconds: 5), (timer) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     print("EXUCUTE");
 
     // try{
     if (prefs.getString('userid') != 'null') {
-      var count =
-          int.parse(await getOpenTickets(prefs.getString('userid').toString()));
 
       var tiketid = await prefs.getString('ticketId');
       var tiketdesc = await prefs.getString('ticketDesc');
 
+
+      var count = int.parse(await getOpenTickets(prefs.getString('userid').toString()));
       try {
+       var initcount =prefs.getInt('key')??1000;
 
-
-
-
+       print("initcount : "+initcount.toString());
+       print("count : "+count.toString());
 
         if (initcount < count) {
           NotificationService().showNotification(
@@ -113,8 +116,9 @@ onStart(ServiceInstance service) async {
               title: ' التذكره رقم $tiketid  تم تحويلها لك ',
               body: tiketdesc);
         }
-        initcount = int.parse(
-            await getOpenTickets(prefs.getString('userid').toString()));
+        prefs.setInt('key', int.parse(
+            await getOpenTickets(prefs.getString('userid').toString())));
+
       } catch (E) {
         print("ERROR WHEN GET DATA    $E");
       }
@@ -133,7 +137,7 @@ onStart(ServiceInstance service) async {
       },
     );*/
   });
-}
+}}
 
 final globalNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -150,7 +154,7 @@ getOpenTickets(String useris) async {
     );
 
     if (res.statusCode == 200) {
-      print("Profile" + res.body.toString());
+     // print("Profile" + res.body.toString());
 
       List<dynamic> body = jsonDecode(res.body);
 
@@ -161,9 +165,9 @@ getOpenTickets(String useris) async {
           .toList();
 
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('ticketId', Doctors.last.Id.toString());
-      await prefs.setString('ticketDesc', Doctors.last.IssueDescr.toString());
-      await prefs.setString('ticketDate', Doctors.last.TicketDate.toString().substring(5,10));
+      await prefs.setString('ticketId', Doctors.first.Id.toString());
+      await prefs.setString('ticketDesc', Doctors.first.IssueDescr.toString());
+      await prefs.setString('ticketDate', Doctors.first.TicketDate.toString().substring(5,10));
 
     //  print("this is datee   " + Doctors.last.TicketDate.toString().substring(5,7));
 

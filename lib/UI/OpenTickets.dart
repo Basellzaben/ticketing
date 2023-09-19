@@ -585,20 +585,23 @@ setState(() {
                                                           children: [
                                                             Row(
                                                               children: [
-                                                                Text(
-                                                                    inv.custNameA
-                                                                        .toString(),
-                                                                    style: ArabicTextStyle(
-                                                                        arabicFont:
-                                                                            ArabicFont
-                                                                                .tajawal,
-                                                                        color: HexColor(Globalvireables
-                                                                            .black2),
-                                                                        fontSize:
-                                                                            16 *
-                                                                                unitHeightValue,
-                                                                        fontWeight:
-                                                                            FontWeight.w700)),
+                                                                Container(
+                                                                  width: MediaQuery.of(context).size.width/1.4,
+                                                                  child: Text(
+                                                                      inv.custNameA
+                                                                          .toString(),
+                                                                      style: ArabicTextStyle(
+                                                                          arabicFont:
+                                                                              ArabicFont
+                                                                                  .tajawal,
+                                                                          color: HexColor(Globalvireables
+                                                                              .black2),
+                                                                          fontSize:
+                                                                              16 *
+                                                                                  unitHeightValue,
+                                                                          fontWeight:
+                                                                              FontWeight.w700)),
+                                                                ),
                                                                 Spacer(),
                                                                 Column(
                                                                   children: [

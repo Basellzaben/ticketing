@@ -775,14 +775,11 @@ child: Container(
    }
 
    int selectedIndex = 1;
-
    final List<Widget> nav = [
      Settings(),
      Home(),
      DailyWork(),
    ];
-
-
 
 
    ////////////////////

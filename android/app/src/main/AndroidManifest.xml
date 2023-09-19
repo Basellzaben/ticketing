@@ -10,7 +10,7 @@
 
 
     <application
-        android:label="ticketing"
+        android:label="Galaxy Ticketing"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 

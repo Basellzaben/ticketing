@@ -33,16 +33,17 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
   var isMackOs=false;
-
   var check = false;
+
 
   @override
   void initState() {
-
     Getrememper();
     super.initState();
   }
+
 var Terms;
+
   @override
   void dispose() {
     super.dispose();

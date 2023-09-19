@@ -404,12 +404,8 @@ class _SettingsState extends State<Settings> {
                                           );
                                         },
                                       );
-                                      //Widgets.ShowLoaderDialog(context, "Logout","");
-                                      /*Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(
-            builder: (context) => LoginScreen(),
-          ),
-              (Route<dynamic> route) => false);*/
+
+
                                     },
                                     child: Row(
                                       children: [

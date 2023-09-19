@@ -14,10 +14,8 @@ class Globalvireables {
   static String grey="#707070";
   static String secondcolor2="#d0e8ee";
 
-
-  // static String connectIP="10.0.1.120:9998";
- static String connectIP="10.0.1.109:7075";
-
+ //  static String connectIP="10.0.1.120:9998";
+ static String connectIP="94.249.83.196:7075";
 
   static String loginAPI="http://"+Globalvireables.connectIP+"/api/loginController/login";
   static String NumofticketsURL="http://"+Globalvireables.connectIP+"/api/NumOfTicketsController/NumOfTickets";
@@ -31,8 +29,6 @@ class Globalvireables {
   static String customers="http://"+Globalvireables.connectIP+"/api/getallcustomersControler/getcustomers";
   static String getsystems="http://"+Globalvireables.connectIP+"/api/sycustController/sycust";
 
-
-
   //ticket information
   static String department="http://"+Globalvireables.connectIP+"/api/infoTDepartment/Department";
   static String classification="http://"+Globalvireables.connectIP+"/api/infoTclassification/tickeclassification";
@@ -41,13 +37,8 @@ class Globalvireables {
   static String infoTpriority="http://"+Globalvireables.connectIP+"/api/infoTpriority/priority";
   static String infoTsource="http://"+Globalvireables.connectIP+"/api/infoTsource/ticketsource";
   static String OpenTicketURL="http://"+Globalvireables.connectIP+"/api/OpenTicketController/OpenTicket";
-
-
-
-
   static String permTicket="http://"+Globalvireables.connectIP+"/api/ticketPermisionController/ticketPermision";
   static String permDaily="http://"+Globalvireables.connectIP+"/api/dailyworkPermisionController/dailyworkPermision";
-
 
 
   static String them1="#229954";
@@ -55,8 +46,5 @@ class Globalvireables {
   static String them3="#8E44AD";
   static String them4="#2E4053";
   static String them5="#D35400";
-
-
-
 
 }

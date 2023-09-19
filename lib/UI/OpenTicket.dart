@@ -35,6 +35,7 @@ class _OpenTicketState extends State<OpenTicket> {
   @override
   void initState() {
     gatMaxId(context);
+    expextedtime.text='0';
    // callMehtod(context);
     super.initState();
 
@@ -81,15 +82,15 @@ class _OpenTicketState extends State<OpenTicket> {
   TextEditingController requestbycontroller = TextEditingController();
 
 
-  var systemVar='null';
-  var dateVar='null';
-  var depVar='null';
-  var userVar='null';
-  var source='null';
-var typeVar='null';
-  var selectidcustomer='null';
-var classVar='null';
-var prpartyVar='null';
+  var systemVar='0';
+  var dateVar='0';
+  var depVar='0';
+  var userVar='0';
+  var source='0';
+var typeVar='0';
+  var selectidcustomer='0';
+var classVar='0';
+var prpartyVar='0';
 
 var maxid='';
   var timer;
@@ -217,8 +218,7 @@ var maxid='';
                                               .w600,
                                           height: 1)),
                                   Text(
-                                      textAlign: TextAlign
-                                          .right,
+                                      textAlign: TextAlign.right,
                                       LanguageProvider.Llanguage('ticketnum'),
                                       style: TextStyle(
                                           fontSize: 17,
@@ -740,9 +740,8 @@ var maxid='';
                                                                 FutureBuilder(
                                                               future: getsystems(
                                                                   context,
-
-                                                                  Loginprovider.getshowAllTicket().toString()=='true'?
-                                                              "all":
+                                                               /*   Loginprovider.getshowAllTicket().toString()=='true'?
+                                                              "all"+selectidcustomer.toString():*/
                                                                   selectidcustomer),
                                                               builder: (BuildContext
                                                                       context,
@@ -3134,9 +3133,16 @@ userVar=v.id.toString();
 
                                           if(date.text.toString()!=null && selectidcustomer.toString()!='null'&&source.toString()!='null' &&
     typeVar.toString()!='null' && depVar.toString()!='null'&&expexteddate.text.toString()!=null &&
-    userVar.toString()!='null'&&systemVar.toString()!='null'&&explanerror.text.toString()!=null) {
+    userVar.toString()!='null'&&systemVar.toString()!='null'&&explanerror.text.toString()!=null &&
+                                              Loginprovider.getshowAllTicket().toString()!='true'
+                                          ) {
   OpenTicket(context);
-}else{
+}else if(  Loginprovider.getshowAllTicket().toString()=='true' &&
+                                              selectidcustomer.toString()!='null'
+                                          &&explanerror.text.toString()!=null
+                                          ){
+                                            OpenTicket(context);
+                                          }else{
   showDialog(
       context: context,
       builder: (_) => AlertDialog(
@@ -3234,8 +3240,36 @@ userVar=v.id.toString();
               (dynamic item) => systemsModel.fromJson(item),
             )
             .toList();
+        var Loginprovider = Provider.of<LoginProvider>(context, listen: false);
 
+        if(Doctors.length>0)
         return Doctors;
+        else if(Doctors.length<1 && Loginprovider.getshowAllTicket().toString()=='true')
+          {
+            map['customerid'] = 'all';
+
+            http.Response res = await http.post(
+              postsURL,
+              body: map,
+            );
+
+            if (res.statusCode == 200) {
+              List<dynamic> body = jsonDecode(res.body);
+
+
+              print("systemss : "+body.toString());
+
+              List<systemsModel> Doctors = body
+                  .map(
+                    (dynamic item) => systemsModel.fromJson(item),
+              )
+                  .toList();
+
+              return Doctors;
+
+            }}else
+
+              return Doctors;
       } else {
         throw "Unable to retrieve Profile.";
       }
@@ -3534,7 +3568,7 @@ setState(() {
 
      map['TicketType']=typeVar.toString();
     map['Department']=depVar.toString();
-    map['DueDate']=expexteddate.text.toString(); // contr
+    map['DueDate']=expexteddate.text.toString()??''; // contr
 
    map['AssignToT']=userVar.toString();
   map['SystemId']=systemVar.toString();
@@ -3548,7 +3582,7 @@ setState(() {
     map['Delivered']='0';
     map['CreatedBy']=Loginprovider.getuserId().toString();
     map['PriorityLevel']=prpartyVar.toString();
-    map['InternalNotesT']=notes.text.toString();
+    map['InternalNotesT']=notes.text.toString()??'';
     map['userid']=Loginprovider.getuserId().toString();
     map['ticketid']=maxid;
 
@@ -3608,7 +3642,7 @@ setState(() {
         context: context,
         builder: (context) => new AlertDialog(
           title: new Text(l.Llanguage('openTicket')),
-          content: Text(l.Llanguage('anerror')),
+          content: Text(l.Llanguage('anerror'  + e.toString())),
           actions: <Widget>[],
         ),
       );
